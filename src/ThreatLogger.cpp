@@ -73,9 +73,8 @@ int openDestination(const char* path) noexcept {
     return fd;
 }
 
-// A wrong init sequence (init twice, getInstance before init) must stop the program
-// in every build. assert would vanish in a release build (NDEBUG), so print the reason
-// and stop explicitly.
+// A wrong init sequence (init twice, getInstance before init) is a programming error:
+// print the reason to stderr and abort. The check runs in every build, release included.
 [[noreturn]] void fatal(const char* reason) noexcept {
     std::fprintf(stderr, "[ThreatLogger] %s, terminating\n", reason);
     std::abort();
